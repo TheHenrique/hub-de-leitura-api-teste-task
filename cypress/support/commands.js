@@ -52,3 +52,19 @@ Cypress.Commands.add('geraToken', (email, senha) => {
             return response.body.user.id
         })
  })
+
+ Cypress.Commands.add('cadastrarLivro', (token, titulo, autor) => {
+        cy.api({
+            method: 'POST',
+            url: 'books',
+            headers: { 'Authorization': token },
+            body: {
+                title: titulo,
+                author: autor,
+                total_copies: 3
+            }
+        }).then(response => {
+            expect(response.status).to.equal(201)
+            return response.body.book.id
+        })
+ })
